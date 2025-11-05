@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="home">
+  <div class="container">
+    <h1>Evento in arrivo...</h1>
+    <div id="countdown" class="countdown"></div>
+    <button id="openVideo">Guarda il video 🎬</button>
+  </div>
+
+  <!-- Finestra popup per il video -->
+  <div id="videoPopup" class="popup">
+    <div class="popup-content">
+      <span id="closePopup" class="close">&times;</span>
+      <video width="800" controls>
+        <source src="video.mp4" type="video/mp4">
+        Il tuo browser non supporta i video HTML5.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    // COUNTDOWN
+    const targetDate = new Date("2025-12-31T00:00:00").getTime(); // ← cambia la data qui!
+    const countdown = document.getElementById("countdown");
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.textContent = `${days}g ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+
+    // POPUP VIDEO
+    const popup = document.getElementById("videoPopup");
+    const openBtn = document.getElementById("openVideo");
+    const closeBtn = document.getElementById("closePopup");
+
+    openBtn.addEventListener("click", () => popup.style.display = "flex");
+    closeBtn.addEventListener("click", () => popup.style.display = "none");
+
+    // Chiudi popup cliccando fuori
+    window.addEventListener("click", e => {
+      if (e.target === popup) popup.style.display = "none";
+    });
+  </script>
+</body>
+</html>
