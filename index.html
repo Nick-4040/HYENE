@@ -16,14 +16,20 @@
     <p id="error" class="error"></p>
   </div>
 
-  <script>
+<script>
 document.getElementById('submit').addEventListener('click', () => {
   const key = document.getElementById('keyword').value.trim().toUpperCase();
   if (key === "HYENE") {
-    window.location.href = "Video_sito.html";  // percorso relativo corretto
+    window.location.href = "Video_sito.html";
   } else {
     document.getElementById('error').textContent = "❌ Keyword errata!";
   }
+});
+
+// Effetto Parallax
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.body.style.backgroundPositionY = `${scrollY * 0.5}px`;
 });
 </script>
 </body>

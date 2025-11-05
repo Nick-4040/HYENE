@@ -1,33 +1,40 @@
+/* Reset e font */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Philosopher', serif;
   color: white;
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
+  background-image: url('sfondo.png'); /* 👉 sostituisci con la tua immagine */
   background-size: cover;
   background-position: center;
-  font-family: 'Philosopher', serif;
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* si muove con la pagina */
+  background-color: #000; /* nero sotto se non copre tutto */
+  overflow-x: hidden;
+  transition: background-position 0.1s ease-out; /* effetto morbido */
 }
 
-/* Sfondo comune */
+/* Sfondo della home */
 body.home {
   background-image: url('sfondo.png'); /* 👉 sostituisci con la tua immagine */
 }
 
+/* Contenitore principale */
 .container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #111111; /* Nero scuro */
+  position: relative;            /* 🔹 da absolute → relative per seguire lo scroll */
+  margin: 120px auto;            /* 🔹 spaziatura dall’alto invece del centraggio fisso */
+  background: #111111;           /* Nero scuro */
   padding: 40px;
   border-radius: 20px;
-  min-width: 300px;
-  color: #FF3F64; /* Colore delle scritte rosso */
+  max-width: 500px;
+  color: #FF3F64;                /* Colore scritte rosso */
   text-align: center;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5); /* effetto glow leggero */
 }
 
+/* Input */
 input {
   padding: 10px;
   font-size: 16px;
@@ -37,11 +44,12 @@ input {
   text-align: center;
 }
 
+/* Bottone */
 button {
   padding: 10px 20px;
   margin-top: 15px;
-  background: #222222; /* bottone nero scuro */
-  color: #FF3F64;      /* scritta rossa */
+  background: #222222;
+  color: #FF3F64;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -49,9 +57,10 @@ button {
 }
 
 button:hover {
-  background: #333333; /* leggermente più chiaro al passaggio */
+  background: #333333;
 }
 
+/* Errore */
 .error {
   color: #ff4444;
   margin-top: 10px;
@@ -65,7 +74,7 @@ button:hover {
   text-shadow: 0 0 10px #000;
 }
 
-/* Popup Video */
+/* Popup video */
 .popup {
   display: none;
   justify-content: center;
