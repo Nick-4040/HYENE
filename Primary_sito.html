@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accesso Riservato</title>
-  <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="home">
   <div class="container">
@@ -19,7 +19,7 @@
 document.getElementById('submit').addEventListener('click', () => {
   const key = document.getElementById('keyword').value.trim().toUpperCase();
   if (key === "HYENE") {
-    window.location.href = "./video.html";  // percorso relativo corretto
+    window.location.href = "Video_sito.html";  // percorso relativo corretto
   } else {
     document.getElementById('error').textContent = "❌ Keyword errata!";
   }
