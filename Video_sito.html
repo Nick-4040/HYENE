@@ -5,16 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Countdown</title>
   <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body class="home">
+  <div class="smoke"></div>
   <div class="container">
     <h1>Evento in arrivo...</h1>
     <div id="countdown" class="countdown"></div>
-    <button id="openVideo">Guarda il video 🎬</button>
+
+    <!-- BOTTONE VIDEO -->
+    <button id="openVideo">🎬 Guarda il video</button>
+
+    <!-- Testo richiamo -->
+    <div class="call-section">
+      <h2>La iena ti sta cercando...</h2>
+      <h2>Rispondi al richiamo</h2>
+      <button id="playAudio">🎧 Ascolta il richiamo</button>
+      <button id="stopAudio" style="display:none;">Ottieni card</button>
+    </div>
+
+    <!-- CARD -->
+    <div id="finalCard" class="final-card">
+      <img src="card_hyene.png" alt="Card Hyene" style="width:100%;border-radius:10px;">
+      <a href="card_hyene.png" download class="share-button">📥 Scarica la card</a>
+      <p class="call-hint">Diffondi il messaggio... condividila nelle tue storie e tagga <strong>@hyene_22</strong></p>
+    </div>
   </div>
 
-  <!-- Finestra popup per il video -->
+  <!-- Popup video -->
   <div id="videoPopup" class="popup">
     <div class="popup-content">
       <span id="closePopup" class="close">&times;</span>
@@ -27,7 +45,7 @@
 
   <script>
     // COUNTDOWN
-    const targetDate = new Date("2025-12-31T00:00:00").getTime(); // ← cambia la data qui!
+    const targetDate = new Date("2025-12-31T00:00:00").getTime();
     const countdown = document.getElementById("countdown");
 
     setInterval(() => {
@@ -49,18 +67,36 @@
 
     openBtn.addEventListener("click", () => popup.style.display = "flex");
     closeBtn.addEventListener("click", () => popup.style.display = "none");
-
-    // Chiudi popup cliccando fuori
     window.addEventListener("click", e => {
       if (e.target === popup) popup.style.display = "none";
     });
 
-    // Effetto Parallax
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  document.body.style.backgroundPositionY = `${scrollY * 0.5}px`;
-});
+    // AUDIO INTERATTIVO
+    const audio = new Audio("richiamo.mp3");
+    const playBtn = document.getElementById("playAudio");
+    const stopBtn = document.getElementById("stopAudio");
+    const card = document.getElementById("finalCard");
 
+    playBtn.addEventListener("click", () => {
+      playBtn.style.display = "none";
+      stopBtn.style.display = "inline-block";
+      document.body.classList.add("glitch-active");
+      audio.play();
+    });
+
+    // Alla fine dell’audio o quando si clicca "Ottieni card"
+    audio.addEventListener("ended", showCard);
+    stopBtn.addEventListener("click", () => {
+      audio.pause();
+      audio.currentTime = 0;
+      showCard();
+    });
+
+    function showCard() {
+      stopBtn.style.display = "none";
+      card.style.display = "block";
+      document.body.classList.remove("glitch-active");
+    }
   </script>
 </body>
 </html>

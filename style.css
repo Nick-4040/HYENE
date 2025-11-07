@@ -23,15 +23,15 @@ body.home {
 
 /* Contenitore principale */
 .container {
-  position: relative;            /* 🔹 da absolute → relative per seguire lo scroll */
-  margin: 120px auto;            /* 🔹 spaziatura dall’alto invece del centraggio fisso */
-  background: #111111;           /* Nero scuro */
+  position: relative;            
+  margin: 120px auto;            
+  background: #111111;           
   padding: 40px;
   border-radius: 20px;
   max-width: 500px;
-  color: #FF3F64;                /* Colore scritte rosso */
+  color: #FF3F64;                
   text-align: center;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5); /* effetto glow leggero */
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
 }
 
 /* Input */
@@ -105,3 +105,136 @@ button:hover {
   color: white;
   cursor: pointer;
 }
+
+/* Sezione chiamata */
+.call-section {
+  margin-top: 40px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.call-section h2 {
+  color: #FF3F64;
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.call-section p {
+  color: #FF3F64;
+  font-size: 1.2em;
+}
+
+.call-link {
+  display: block;
+  font-size: 1.6em;
+  color: #FF3F64;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 10px 0;
+  transition: 0.3s;
+}
+
+.call-link:hover {
+  color: #ff6b81;
+  text-shadow: 0 0 10px #FF3F64;
+}
+
+.call-hint {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+/* Glitch effect */
+@keyframes glitch {
+  0% { clip-path: inset(10% 0 85% 0); transform: skew(0.5deg); }
+  20% { clip-path: inset(40% 0 45% 0); transform: skew(-0.5deg); }
+  40% { clip-path: inset(10% 0 65% 0); transform: skew(0.3deg); }
+  60% { clip-path: inset(50% 0 35% 0); transform: skew(-0.3deg); }
+  80% { clip-path: inset(80% 0 5% 0); transform: skew(0.2deg); }
+  100% { clip-path: inset(0 0 0 0); transform: skew(0); }
+}
+
+.glitch-active {
+  animation: glitch 0.6s steps(2) alternate;
+  filter: contrast(200%) brightness(150%);
+}
+
+/* Card finale */
+.final-card {
+  display: none;
+  margin: 40px auto;
+  text-align: center;
+  background: #000;
+  border: 2px solid #FF3F64;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 25px #FF3F64;
+  max-width: 400px;
+  color: #FF3F64;
+}
+
+.share-button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #111;
+  color: #FF3F64;
+  border: 1px solid #FF3F64;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.share-button:hover {
+  background: #FF3F64;
+  color: #000;
+}
+
+/* === EFFETTO FUMO TENUE === */
+.smoke {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* non blocca i clic */
+  background-image: url('fumo.png'); /* 🔹 Inserisci qui il tuo file PNG */
+  background-repeat: repeat;
+  background-size: cover;
+  opacity: 0.60; /* 🔹 aumenta o diminuisci per più/meno visibilità */
+  animation: smokeMove 30s linear infinite;
+  z-index: 0;
+}
+
+/* Movimento fluido del fumo */
+@keyframes smokeMove {
+  0% {
+    background-position: 0 0;
+    opacity: 0.22;
+  }
+  25% {
+    background-position: 300px 100px;
+    opacity: 0.27;
+  }
+  50% {
+    background-position: 600px 200px;
+    opacity: 0.25;
+  }
+  75% {
+    background-position: 900px 300px;
+    opacity: 0.28;
+  }
+  100% {
+    background-position: 1200px 400px;
+    opacity: 0.25;
+  }
+}
+
+/* Mantiene tutto sopra al fumo */
+.container, .popup, .call-section {
+  position: relative;
+  z-index: 2;
+}
+
+
