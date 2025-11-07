@@ -3,18 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Countdown</title>
+  <title>Countdown & Richiamo</title>
   <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
+  <style>
+    /* === FUMO TENUE === */
+    .smoke {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image: url('fumo.png'); /* Inserisci qui il PNG del fumo */
+      background-repeat: repeat;
+      background-size: cover;
+      opacity: 0.25; /* aumenta per più visibilità */
+      animation: smokeMove 60s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes smokeMove {
+      0% { background-position: 0 0; }
+      25% { background-position: 300px 100px; opacity:0.27; }
+      50% { background-position: 600px 200px; opacity:0.25; }
+      75% { background-position: 900px 300px; opacity:0.28; }
+      100% { background-position: 1200px 400px; opacity:0.25; }
+    }
+
+    /* Contenuti sopra il fumo */
+    .container, .call-section, .final-card {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Card fade-in */
+    .final-card {
+      display: none;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      max-width: 500px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .final-card.show {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
 </head>
 <body class="home">
   <div class="smoke"></div>
+
   <div class="container">
     <h1>Evento in arrivo...</h1>
     <div id="countdown" class="countdown"></div>
 
-    <!-- BOTTONE VIDEO -->
-    <button id="openVideo">🎬 Guarda il video</button>
+    <!-- VIDEO IN LINEA NEL CONTAINER -->
+    <div id="videoContainer" style="background:#111111; padding:20px; border-radius:20px; margin:20px auto; max-width:650px;">
+      <video id="embeddedVideo" width="100%" controls>
+        <source src="Video.mp4" type="video/mp4">
+        Il tuo browser non supporta i video HTML5.
+      </video>
+    </div>
+
 
     <!-- Testo richiamo -->
     <div class="call-section">
@@ -23,7 +78,6 @@
       <button id="playAudio">🎧 Ascolta il richiamo</button>
       <p id="listeningText" style="display:none; color:#FF3F64; font-size:1.2em; margin-top:10px;">Richiamo in ascolto...</p>
       <button id="stopAudio" style="display:none;">Ottieni Card</button>
-
     </div>
 
     <!-- CARD -->
@@ -31,17 +85,6 @@
       <img src="card_hyene.png" alt="Card Hyene" style="width:100%;border-radius:10px;">
       <a href="card_hyene.png" download class="share-button">📥 Scarica la card</a>
       <p class="call-hint">Diffondi il messaggio... condividila nelle tue storie e tagga <strong>@hyene_22</strong></p>
-    </div>
-  </div>
-
-  <!-- Popup video -->
-  <div id="videoPopup" class="popup">
-    <div class="popup-content">
-      <span id="closePopup" class="close">&times;</span>
-      <video width="800" controls>
-        <source src="Video.mp4" type="video/mp4">
-        Il tuo browser non supporta i video HTML5.
-      </video>
     </div>
   </div>
 
@@ -62,46 +105,31 @@
       countdown.textContent = `${days}g ${hours}h ${minutes}m ${seconds}s`;
     }, 1000);
 
-    // POPUP VIDEO
-    const popup = document.getElementById("videoPopup");
-    const openBtn = document.getElementById("openVideo");
-    const closeBtn = document.getElementById("closePopup");
+    // AUDIO INTERATTIVO
+    const audio = new Audio("richiamo.mp3");
+    const playBtn = document.getElementById("playAudio");
+    const stopBtn = document.getElementById("stopAudio");
+    const card = document.getElementById("finalCard");
+    const listeningText = document.getElementById("listeningText");
 
-    openBtn.addEventListener("click", () => popup.style.display = "flex");
-    closeBtn.addEventListener("click", () => popup.style.display = "none");
-    window.addEventListener("click", e => {
-      if (e.target === popup) popup.style.display = "none";
+    playBtn.addEventListener("click", () => {
+      playBtn.style.display = "none";
+      stopBtn.style.display = "none";
+      listeningText.style.display = "block";
+      audio.play();
+      document.body.classList.add("glitch-active"); // se usi glitch
     });
 
+    audio.addEventListener("ended", () => {
+      stopBtn.style.display = "inline-block";
+      listeningText.style.display = "none";
+      document.body.classList.remove("glitch-active");
+    });
 
-    // ASCOLTO DEL RICHIAMO
-    const audio = new Audio("richiamo.mp3");
-  const playBtn = document.getElementById("playAudio");
-  const stopBtn = document.getElementById("stopAudio");
-  const card = document.getElementById("finalCard");
-  const listeningText = document.getElementById("listeningText");
-
-  // Quando clicchi "Ascolta il richiamo"
-  playBtn.addEventListener("click", () => {
-    playBtn.style.display = "none";        // nasconde il bottone ascolta
-    stopBtn.style.display = "none";        // assicura che Ottieni Card sia nascosto
-    listeningText.style.display = "block"; // mostra "Richiamo in ascolto..."
-    audio.play();
-    document.body.classList.add("glitch-active"); // effetto glitch
-  });
-
-  // Alla fine dell'audio
-  audio.addEventListener("ended", () => {
-    stopBtn.style.display = "inline-block";      // mostra bottone "Ottieni Card"
-    listeningText.style.display = "none";        // nasconde il messaggio
-    document.body.classList.remove("glitch-active");
-  });
-
-  // Quando clicchi "Ottieni Card"
-  stopBtn.addEventListener("click", () => {
-    card.classList.add("show");   // mostra la card con fade-in
-    stopBtn.style.display = "none";
-  });
+    stopBtn.addEventListener("click", () => {
+      card.classList.add("show");
+      stopBtn.style.display = "none";
+    });
   </script>
 </body>
 </html>

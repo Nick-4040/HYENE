@@ -250,5 +250,18 @@ button:hover {
   transform: scale(1);
 }
 
+#videoContainer {
+  background: #111111;
+  padding: 20px;
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 650px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5); /* optional glow */
+}
+#videoContainer video {
+  border-radius: 10px;
+  width: 100%;
+}
 
 
