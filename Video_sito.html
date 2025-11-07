@@ -21,7 +21,9 @@
       <h2>La iena ti sta cercando...</h2>
       <h2>Rispondi al richiamo</h2>
       <button id="playAudio">🎧 Ascolta il richiamo</button>
-      <button id="stopAudio" style="display:none;">Ottieni card</button>
+      <p id="listeningText" style="display:none; color:#FF3F64; font-size:1.2em; margin-top:10px;">Richiamo in ascolto...</p>
+      <button id="stopAudio" style="display:none;">Ottieni Card</button>
+
     </div>
 
     <!-- CARD -->
@@ -71,32 +73,35 @@
       if (e.target === popup) popup.style.display = "none";
     });
 
-    // AUDIO INTERATTIVO
+
+    // ASCOLTO DEL RICHIAMO
     const audio = new Audio("richiamo.mp3");
-    const playBtn = document.getElementById("playAudio");
-    const stopBtn = document.getElementById("stopAudio");
-    const card = document.getElementById("finalCard");
+  const playBtn = document.getElementById("playAudio");
+  const stopBtn = document.getElementById("stopAudio");
+  const card = document.getElementById("finalCard");
+  const listeningText = document.getElementById("listeningText");
 
-    playBtn.addEventListener("click", () => {
-      playBtn.style.display = "none";
-      stopBtn.style.display = "inline-block";
-      document.body.classList.add("glitch-active");
-      audio.play();
-    });
+  // Quando clicchi "Ascolta il richiamo"
+  playBtn.addEventListener("click", () => {
+    playBtn.style.display = "none";        // nasconde il bottone ascolta
+    stopBtn.style.display = "none";        // assicura che Ottieni Card sia nascosto
+    listeningText.style.display = "block"; // mostra "Richiamo in ascolto..."
+    audio.play();
+    document.body.classList.add("glitch-active"); // effetto glitch
+  });
 
-    // Alla fine dell’audio o quando si clicca "Ottieni card"
-    audio.addEventListener("ended", showCard);
-    stopBtn.addEventListener("click", () => {
-      audio.pause();
-      audio.currentTime = 0;
-      showCard();
-    });
+  // Alla fine dell'audio
+  audio.addEventListener("ended", () => {
+    stopBtn.style.display = "inline-block";      // mostra bottone "Ottieni Card"
+    listeningText.style.display = "none";        // nasconde il messaggio
+    document.body.classList.remove("glitch-active");
+  });
 
-    function showCard() {
-      stopBtn.style.display = "none";
-      card.style.display = "block";
-      document.body.classList.remove("glitch-active");
-    }
+  // Quando clicchi "Ottieni Card"
+  stopBtn.addEventListener("click", () => {
+    card.classList.add("show");   // mostra la card con fade-in
+    stopBtn.style.display = "none";
+  });
   </script>
 </body>
 </html>
